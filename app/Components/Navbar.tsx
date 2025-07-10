@@ -1,22 +1,24 @@
+'use client';
 import Link from 'next/link'
 import React from 'react'
+import {SignUpButton,SignedIn,SignedOut,UserButton,} from '@clerk/nextjs'
 
+const Category = [
+    "All Categories",
+    "Electronics & Smart Gadgets",
+    "Home & Kitchen Essentials",
+    "Fashion & Accessories",
+    "Health & Beauty",
+    "Sports & Outdoors",
+    "Toys & Games",
+    "Books & Stationery",
+    "Automotive & Tools",
+    "Pet Supplies"
+]
 
 
 
 const Navbar = () => {
-    const Category = [
-        "All Categories",
-        "Electronics & Smart Gadgets",
-        "Home & Kitchen Essentials",
-        "Fashion & Accessories",
-        "Health & Beauty",
-        "Sports & Outdoors",
-        "Toys & Games",
-        "Books & Stationery",
-        "Automotive & Tools",
-        "Pet Supplies"
-    ]
   return (
     <div className='bg-black h-15 text-white flex items-center justify-between'>
         <div className='text-3xl px-5'>
@@ -32,11 +34,18 @@ const Navbar = () => {
             <button className='h-10 bg-amber-500 w-15 rounded-r-lg hover:bg-amber-600 text-black transition-all duration-150 ease-in-out'>Search</button>
         </div>
         <div className='flex items-center gap-5 px-5'>
+            <SignedOut>
+                <SignUpButton>
+                    <div>
+                        <button className='hover:border px-7 py-2'>Profile</button>
+                    </div>
+                </SignUpButton>
+            </SignedOut>
             <div>
-                <button className='hover:border px-7 py-2'>Profile</button>
-            </div>
-            <div>
-                <button className='hover:border px-7 py-2'>Cart</button>
+                <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite'>Cart</button>
+                <SignedIn>
+                    <UserButton />
+                </SignedIn>
             </div>
         </div>
     </div>
@@ -44,3 +53,4 @@ const Navbar = () => {
 }
 
 export default Navbar
+
