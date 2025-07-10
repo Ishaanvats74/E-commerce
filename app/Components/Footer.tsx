@@ -1,5 +1,5 @@
-''
-import Link from 'next/link'
+'use client';
+
 import React from 'react'
 
 const GetToKnow =[
@@ -38,31 +38,32 @@ const LetUsHelpYou = [
 const Footer = () => {
   return (
     <div className='bg-[#1e242af0] text-[#DDDDDD]'>
-        <Link href={'/'}>
-            <div className='w-full shadow justify-center bg-[#252c34] text-white hover:bg-gray-700/80 hover:cursor-pointer h-15 flex items-center'>Back to Top</div>
-      </Link>
-      <div className='   space-y-20 pt-24 pb-24'>
+        <div onClick={()=> window.scrollTo({top:0,behavior:'smooth'})} className='w-full shadow justify-center bg-[#252c34] text-white hover:bg-gray-700/80 hover:cursor-pointer h-15 flex items-center'>Back to Top</div>
+      <div className='   space-y-20 pt-24 '>
         <div className='flex justify-around text-white'>
-            <div>
+            <div className='space-y-4'>
                 <p className='font-bold'>Get to Know Us</p>
                 <ul>{GetToKnow.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
             </div>
-            <div>
+            <div className='space-y-4'>
                 <p className='font-bold'>Connect with Us</p>
                 <ul>{ConnectWithUs.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
             </div>
-            <div>
+            <div className='space-y-4'>
                 <p className='font-bold'>Make Money with Us</p>
                 <ul>{MakeMoneyWithUs.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
             </div>
-            <div>
+            <div className='space-y-4'>
                 <p className='font-bold'>Let Us Help You</p>
                 <ul>{LetUsHelpYou.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
             </div>
         </div>
         <hr />
       </div>
-      <div></div>
+        <div className='flex flex-col justify-center items-center text-white bg-gray-700 py-10'>
+            <p>E-Commerce</p>
+            <p>© 2023 E-Commerce, Inc. or its affiliates</p>
+        </div>  
     </div>
   )
 }

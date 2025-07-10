@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <div className='bg-black h-15 text-white flex items-center justify-between'>
         <div className='text-3xl px-5'>
-            <Link href="/">E-Commerence</Link> 
+            <Link href="/">E-Commerce</Link> 
         </div>
         <div className='flex items-center '>
                 <select name="" id="" className='bg-gray-200 h-10 w-14 rounded-l-lg text-black px-2 overflow-scroll hover:bg-gray-300 transition-all duration-150 ease-in-out'>
