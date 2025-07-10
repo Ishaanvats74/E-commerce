@@ -1,7 +1,7 @@
 'use client';
 import Link from 'next/link'
 import React from 'react'
-import {SignUpButton,SignedIn,SignedOut,UserButton,} from '@clerk/nextjs'
+import {SignUpButton,SignedIn,SignedOut} from '@clerk/nextjs'
 
 const Category = [
     "All Categories",
@@ -34,6 +34,9 @@ const Navbar = () => {
             <button className='h-10 bg-amber-500 w-15 rounded-r-lg hover:bg-amber-600 text-black transition-all duration-150 ease-in-out'>Search</button>
         </div>
         <div className='flex items-center gap-5 px-5'>
+            <div>
+                <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite'>Cart</button>
+            </div>
             <SignedOut>
                 <SignUpButton>
                     <div>
@@ -41,12 +44,11 @@ const Navbar = () => {
                     </div>
                 </SignUpButton>
             </SignedOut>
-            <div>
-                <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite'>Cart</button>
                 <SignedIn>
-                    <UserButton />
+                    <div>
+                        <Link href={'/Profile'} className='hover:border px-7 py-2'>Profile</Link>
+                    </div>
                 </SignedIn>
-            </div>
         </div>
     </div>
   )
