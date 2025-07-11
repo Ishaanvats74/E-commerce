@@ -33,11 +33,11 @@ export default function Home() {
       </div>
     </div>
     )}
-    <div className="relative w-full h-[600px] overflow-hidden">
+    <div className="relative w-full min-h-screen">
       <div className="absolute inset-0 z-0">
-        <Image src="/images/PC_Hero_Asin_3000x1200---Prime-Blue-TRIMMER-PDED._CB790427816_.jpg" width={1000} height={1000} alt="" className="w-full h-full object-cover"/>
+        <Image src="/images/PC_Hero_Asin_3000x1200---Prime-Blue-TRIMMER-PDED._CB790427816_.jpg"  alt="" fill className="w-full h-full object-cover"/>
       </div>
-      <div className="grid grid-cols-4 grid-rows-2 z-50 ">
+      <div className="relative z-10 pt-12 ">
         <ProductCard />
       </div>
     </div>
