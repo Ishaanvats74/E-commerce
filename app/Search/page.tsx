@@ -12,6 +12,7 @@ const Page = () => {
 
   return (
     <div className='flex max-w-full mt-5 h-screen'>
+
       <div className='w-[20%] px-5 space-y-5 '>
         <div>
             <div className='font-bold text-xl'>Year</div> 
@@ -30,11 +31,7 @@ const Page = () => {
                 </div>
             </div>
         </div>
-
-       
-
       </div>
-
 
       <div className='w-[80%]'>
         <div>
@@ -45,14 +42,22 @@ const Page = () => {
                 </div>
                 <div>
                     <div>
-
-                    <p>Wildcraft Unisex Grey & Green Rucksack</p>
+                      <p>Wildcraft Unisex Grey & Green Rucksack</p>
                     </div>
                     <div>
                         <Rating style={{ maxWidth: 100 }} value={4} readOnly />
                     </div>
                     <div>
                          <p>300+ bought in past month</p>
+                    </div>
+                    <div>
+                        <p className='text-2xl font-bold'>₹1,999</p>
+                    </div>
+                    <div>
+                        <p>(40% off)</p>
+                    </div>
+                    <div>
+                        <p>Save Extra with No Cost EMI</p>
                     </div>
                 </div>
             </div>

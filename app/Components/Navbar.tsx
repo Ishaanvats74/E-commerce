@@ -1,7 +1,8 @@
 'use client';
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import {SignUpButton,SignedIn,SignedOut} from '@clerk/nextjs'
+import { useRouter } from 'next/navigation';
 
 const Category = [
     "All Categories",
@@ -19,6 +20,21 @@ const Category = [
 
 
 const Navbar = () => {
+    const [SearchTerm,setSearchTerm] = useState("");
+    const router = useRouter();
+
+    const handleChange= ()=>{
+        if (SearchTerm.trim() !== ""){
+            router.push(`/Search?query=${encodeURIComponent(SearchTerm.trim())}`);
+        }
+    }
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) =>{
+        if(e.key === 'Enter'){
+            handleChange();
+        }
+    }
+
   return (
     <div className='bg-black h-15 text-white flex items-center justify-between'>
         <div className='text-3xl px-5'>
@@ -30,8 +46,8 @@ const Navbar = () => {
                         <option value={item} key={index} className='bg-white pr-10'>{item}</option>
                     ))}
                 </select>
-            <input type="text" placeholder="Search for products..." className='bg-white h-10 w-[700px] text-black px-2 '/>
-            <button className='h-10 bg-amber-500 w-15 rounded-r-lg hover:bg-amber-600 text-black transition-all duration-150 ease-in-out'>Search</button>
+            <input type="text" placeholder="Search for products..." className='bg-white h-10 w-[700px] text-black px-2 ' onChange={(e)=>setSearchTerm(e.target.value)} onKeyDown={handleKeyDown}/>
+            <button className='h-10 bg-amber-500 w-15 rounded-r-lg hover:bg-amber-600 text-black transition-all duration-150 ease-in-out' onClick={handleChange}>Search</button>
         </div>
         <div className='flex items-center gap-5 px-5'>
             <div>
