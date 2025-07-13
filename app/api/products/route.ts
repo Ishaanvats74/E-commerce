@@ -9,18 +9,16 @@ const supabase = createClient(
 export async function GET(req:Request) {
     const { searchParams } = new URL(req.url);
     const query = searchParams.get('query')?.toLowerCase() || '';
+    const page = parseInt(searchParams.get('page') || '1');
+    const limit = parseInt(searchParams.get('limit') || '10');
     console.log(query);
-
-    const { data, error } = await supabase.from('Product').select("*").or(`productDisplayName.ilike.%${query}%,baseColour.ilike.%${query}%,subCategory.ilike.%${query}%`).order('productDisplayName', { ascending: true });
+    
+    const { data, error , count} = await supabase.from('Product').select("*",{count: 'exact'}).or(`productDisplayName.ilike.%${query}%,baseColour.ilike.%${query}%,subCategory.ilike.%${query}%`).order('productDisplayName', { ascending: true }).range((page-1) * limit ,page * limit -1);
     console.log(data, error);
 
     if (error){
         return NextResponse.json({error: error.message},{status: 500});
     };
 
-    const filteredData = data.filter((product)=>{
-        return product.productDisplayName.toLowerCase().includes(query) 
-    })
-
-    return NextResponse.json(filteredData,{status: 200});
+    return NextResponse.json({products: data, count: count},{status: 200});
 }
