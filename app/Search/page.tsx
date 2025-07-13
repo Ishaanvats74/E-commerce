@@ -2,17 +2,45 @@
 import { Rating } from '@smastrom/react-rating';
 import '@smastrom/react-rating/style.css';
 import Image from 'next/image'
-import React from 'react'
+import { useSearchParams } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 
-
+type Product = {
+  id: number;
+  gender: string;
+  masterCategory: string;
+  subCategory: string;
+  articleType: string;
+  baseColour: string;
+  season: string;
+  year: number;
+  usage: string;
+  productDisplayName: string;
+  price: number;
+  link: string;
+}
 
 
 
 const Page = () => {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('query')?.toLowerCase() || '';
+  console.log(query);
+  const [products, setProducts] = useState<Product[]>([]);
 
+  useEffect(()=>{
+    const fetchData = async ()=>{
+      const res = await fetch(`/api/products?query=${encodeURIComponent(query)}`);
+      const data = await res.json();
+      setProducts(data);
+    }
+    if(query) {
+      fetchData();
+    }
+  },[query]);
+  
   return (
     <div className='flex max-w-full mt-5 h-screen'>
-
       <div className='w-[20%] px-5 space-y-5 '>
         <div>
             <div className='font-bold text-xl'>Year</div> 
@@ -35,14 +63,15 @@ const Page = () => {
 
       <div className='w-[80%]'>
         <div>
-            <div className='font-bold text-2xl'>Results</div>
-            <div className='flex'>
+            <div className='font-bold text-2xl'>Results for `{query}`</div>
+              {products.map((item)=>(
+                <div className='flex' key={item.id}>
                 <div>
-                    <Image src={'/images/ac.jpg'} alt='' width={300} height={300} className=''></Image>
+                    <Image src={item.link} alt={item.productDisplayName} width={300} height={300} className=''></Image>
                 </div>
                 <div>
                     <div>
-                      <p>Wildcraft Unisex Grey & Green Rucksack</p>
+                      <p>{item.productDisplayName}</p>
                     </div>
                     <div>
                         <Rating style={{ maxWidth: 100 }} value={4} readOnly />
@@ -51,7 +80,7 @@ const Page = () => {
                          <p>300+ bought in past month</p>
                     </div>
                     <div>
-                        <p className='text-2xl font-bold'>₹1,999</p>
+                        <p className='text-2xl font-bold'>₹{item.price}</p>
                     </div>
                     <div>
                         <p>(40% off)</p>
@@ -61,6 +90,7 @@ const Page = () => {
                     </div>
                 </div>
             </div>
+              ))}
         </div>
       </div>
     </div>
