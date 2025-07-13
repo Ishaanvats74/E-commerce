@@ -40,7 +40,7 @@ const Page = () => {
   },[query]);
   
   return (
-    <div className='flex max-w-full mt-5 h-screen'>
+    <div className='flex max-w-full mt-5 h-auto'>
       <div className='w-[20%] px-5 space-y-5 '>
         <div>
             <div className='font-bold text-xl'>Year</div> 

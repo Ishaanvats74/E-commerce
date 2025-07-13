@@ -14,7 +14,6 @@ export async function GET(req:Request) {
     const { data, error } = await supabase.from('Product').select("*").or(`productDisplayName.ilike.%${query}%,baseColour.ilike.%${query}%,subCategory.ilike.%${query}%`).order('productDisplayName', { ascending: true });
     console.log(data, error);
 
-
     if (error){
         return NextResponse.json({error: error.message},{status: 500});
     };
