@@ -49,10 +49,18 @@ const SearhResults = () => {
   }, [query, currentPage]);
   const totalPages = Math.ceil(total / 10);
 
+  const handleToCart = () => {
+    console.log("Product added to cart");
+  };
+
+  const handleBuy =()=>{
+    console.log("Product purchased");
+  }
+
   return (
     <>
       {isLoading ? (
-        <div className="flex justify-center items-center h-full w-full">
+        <div className="flex justify-center items-center h-screen w-full">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-amber-500"></div>
         </div>
       ) : (
@@ -127,12 +135,12 @@ const SearhResults = () => {
                         <p>Save Extra with No Cost EMI</p>
                       </div>
                       <div>
-                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold">
+                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold" onClick={handleToCart}>
                           Add to Cart
                         </button>
                       </div>
                       <div>
-                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold">
+                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold" onClick={handleBuy}>
                           Buy Now
                         </button>
                       </div>

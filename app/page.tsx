@@ -9,19 +9,14 @@ export default function Home() {
 
   useEffect(()=>{
 
-    const timeout = setTimeout(()=>setLoading(false),10);
+    const timeout = setTimeout(()=>setLoading(false),2000);
     return ()=> clearTimeout(timeout);
   },[])
   
-
-
-    
-  
-
   return (
     <>
     {loading &&(
-        <div className="flex justify-center items-center h-full w-full">
+        <div className="flex justify-center items-center h-screen w-full">
           <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-amber-500"></div>
         </div>
     )}

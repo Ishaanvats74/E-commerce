@@ -54,7 +54,7 @@ const Navbar = () => {
                 <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite'>Cart</button>
             </div>
             <SignedOut>
-                <SignUpButton>
+                <SignUpButton> 
                     <div>
                         <button className='hover:border px-7 py-2'>Profile</button>
                     </div>
