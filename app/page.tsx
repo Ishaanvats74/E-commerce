@@ -1,5 +1,4 @@
 'use client';
-import { ShoppingBag } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import ProductCard from "./Components/ProductCard";
@@ -22,16 +21,9 @@ export default function Home() {
   return (
     <>
     {loading &&(
-            <div className="fixed inset-0 flex flex-col items-center justify-center bg-gradient-to-br from-orange-50 to-yellow-100 z-50">
-      <div className="relative animate-bounce mb-4">
-        <div className="w-20 h-20 bg-orange-500 rounded-full shadow-xl flex items-center justify-center">
-          <ShoppingBag className="text-white w-10 h-10" />
+        <div className="flex justify-center items-center h-full w-full">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-4 border-b-4 border-amber-500"></div>
         </div>
-      </div>
-      <div className="mt-4 text-orange-800 text-md font-medium animate-fade-in-up">
-        Almost there... 🛍️✨
-      </div>
-    </div>
     )}
     <div className="relative w-full min-h-screen">
       <div className="absolute inset-0 z-0">
