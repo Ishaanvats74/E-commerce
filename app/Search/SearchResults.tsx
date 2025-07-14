@@ -1,5 +1,6 @@
 "use client";
 export const dynamic = "force-dynamic";
+import { useUser } from "@clerk/nextjs";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
 import Image from "next/image";
@@ -22,6 +23,7 @@ type Product = {
 };
 
 const SearhResults = () => {
+  const { user } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [total, setTotal] = useState(0);
@@ -49,9 +51,50 @@ const SearhResults = () => {
   }, [query, currentPage]);
   const totalPages = Math.ceil(total / 10);
 
-  const handleToCart = () => {
-    console.log("Product added to cart");
-  };
+  const handleToCart = async (item: Product) => {
+    if(!user){
+        alert("Please login to add products to cart");
+        return;
+    } 
+    
+    try {
+        const res = await fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+            body: JSON.stringify({
+                clerkUserId: user.id, 
+                productId: item.id,
+                price: item.price,
+                link: item.link,
+                year: item.year,
+                gender: item.gender,
+                articleType: item.articleType,
+                baseColour: item.baseColour,
+                subCategory: item.subCategory,
+                season: item.season,
+                productDisplayName: item.productDisplayName,
+                usage: item.usage,
+                masterCategory: item.masterCategory,
+                filename: item.link.split("/").pop(),
+                quantity: 1,
+            }),
+        });
+
+        const data = await res.json();
+        if (res.ok) {
+            alert('Product added to cart!');
+            console.log(data);
+        } else {
+            alert('Failed to add to cart: ' + data.error);
+        }
+    } catch (error) {
+        console.error("Error adding to cart:", error);
+        alert("Something went wrong.");
+    }
+};
 
   const handleBuy =()=>{
     console.log("Product purchased");
@@ -135,7 +178,7 @@ const SearhResults = () => {
                         <p>Save Extra with No Cost EMI</p>
                       </div>
                       <div>
-                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold" onClick={handleToCart}>
+                        <button className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold" onClick={()=> handleToCart(item)}>
                           Add to Cart
                         </button>
                       </div>

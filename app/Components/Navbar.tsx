@@ -17,8 +17,6 @@ const Category = [
     "Pet Supplies"
 ]
 
-
-
 const Navbar = () => {
     const [SearchTerm,setSearchTerm] = useState("");
     const router = useRouter();
