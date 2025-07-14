@@ -2,15 +2,15 @@ import { auth } from '@clerk/nextjs/server';
 import { createClient } from '@supabase/supabase-js';
 import { NextResponse } from "next/server";
 
-// Initialize Supabase client with service role key (for server-side)
+
 const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.SUPABASE_SERVICE_ROLE_KEY! // This bypasses RLS
+    process.env.SUPABASE_SERVICE_ROLE_KEY!,
 );
+
 
 export async function POST(req: Request){
     try {
-        // Get Clerk user - await the auth function
         const { userId } = await auth();
         
         console.log("Clerk userId:", userId);
@@ -24,12 +24,11 @@ export async function POST(req: Request){
         console.log("Body:", body);
         
         const { productId } = body;
-        
-        // Check if item already exists in cart
+
         const { data: existing, error: selectError } = await supabase
             .from('Cart')
             .select("quantity")
-            .eq('userId', userId)  // Use Clerk user ID
+            .eq('userId', userId) 
             .eq('productId', productId)
             .single();
             
@@ -37,7 +36,6 @@ export async function POST(req: Request){
         console.log("Select error:", selectError);
             
         if (existing) {
-            // Update quantity if item exists
             const { error: updateError } = await supabase
                 .from('Cart')
                 .update({ quantity: existing.quantity + 1 })
@@ -50,11 +48,10 @@ export async function POST(req: Request){
             }
             return NextResponse.json({ message: "Quantity updated" });
         } else {
-            // Insert new item
             const { data, error } = await supabase
                 .from('Cart')
                 .insert([{
-                    userId,  // Clerk user ID
+                    userId,  
                     productId,
                     price: body.price,
                     link: body.link,

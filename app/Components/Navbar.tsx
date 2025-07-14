@@ -33,6 +33,10 @@ const Navbar = () => {
         }
     }
 
+    const HandletoCart = ()=>{
+        router.push('/Cart')
+    }
+
   return (
     <div className='bg-black h-15 text-white flex items-center justify-between'>
         <div className='text-3xl px-5'>
@@ -49,7 +53,7 @@ const Navbar = () => {
         </div>
         <div className='flex items-center gap-5 px-5'>
             <div>
-                <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite'>Cart</button>
+                <button className='hover:border px-7 py-2 nav-cart-icon nav-sprite' onClick={HandletoCart}>Cart</button>
             </div>
             <SignedOut>
                 <SignUpButton> 
