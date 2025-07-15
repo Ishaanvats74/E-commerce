@@ -108,29 +108,32 @@ const SearhResults = () => {
     // }
 
     try {
+        const payload = {
+        clerkUserId: user.id,
+        productId: item.id,
+        price: item.price,
+        link: item.link,
+        year: item.year,
+        gender: item.gender,
+        articleType: item.articleType,
+        baseColour: item.baseColour,
+        subCategory: item.subCategory,
+        season: item.season,
+        productDisplayName: item.productDisplayName,
+        usage: item.usage,
+        masterCategory: item.masterCategory,
+        filename: item.link.split("/").pop(),
+        quantity: 1,
+        address: "Some default or fetched address here", // Fix this later
+      };
+
       const res = await fetch('/api/orders',{
-        method:"Post",
+        method:"POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify({
-          lerkUserId: user.id,
-          productId: item.id,
-          price: item.price,
-          link: item.link,
-          year: item.year,
-          gender: item.gender,
-          articleType: item.articleType,
-          baseColour: item.baseColour,
-          subCategory: item.subCategory,
-          season: item.season,
-          productDisplayName: item.productDisplayName,
-          usage: item.usage,
-          masterCategory: item.masterCategory,
-          filename: item.link.split("/").pop(),
-          quantity: 1,
-        })
+        body: JSON.stringify(payload)
       } 
     );
     const data = await res.json();
@@ -227,7 +230,7 @@ const SearhResults = () => {
                       </div>
                       <div>
                         <button
-                          className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold"
+                          className=" p-2 rounded-3xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-gray-500 bg-gray-400 text-sm font-semibold"
                           onClick={() => handleToCart(item)}
                         >
                           Add to Cart
@@ -235,8 +238,8 @@ const SearhResults = () => {
                       </div>
                       <div>
                         <button
-                          className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold"
-                          onClick={()=>handleBuy(item)}
+                          className=" p-2 rounded-3xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold"
+                          onClick={()=> handleBuy(item)}
                         >
                           Buy Now
                         </button>

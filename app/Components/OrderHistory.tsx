@@ -1,6 +1,8 @@
 'use client';
+import { useUser } from '@clerk/nextjs';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react'
+import { toast } from 'sonner';
 
 type Order ={
   productId: number,
@@ -17,6 +19,7 @@ type Order ={
   price: number,
   link: string,
   quantity: number,
+  filname:string,
   address: string,
 }
 
@@ -24,6 +27,7 @@ const OrderHistory = () => {
     const [isVisible, setIsVisible] = useState(false);
     const [Order,setOrder] = useState<Order[]>([]);
     const [totalPrice, setTotalPrice] = useState(0);
+    const {user} = useUser();
 
   useEffect(()=>{
     const fetchData = async()=>{
@@ -41,17 +45,56 @@ const OrderHistory = () => {
     fetchData();
   },[]) 
 
+  const handleHistory = async(item:Order)=>{
+    if (!user) {
+      alert("Please login to add products to cart");
+      return;
+    }
+
+    try{
+      const res = await fetch('/api/orders',{
+        method:"DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          clerkUserId: user.id,
+          productId: item.productId,
+          price: item.price,
+          link: item.link,
+          year: item.year,
+          gender: item.gender,
+          articleType: item.articleType,
+          baseColour: item.baseColour,
+          subCategory: item.subCategory,
+          season: item.season,
+          productDisplayName: item.productDisplayName,
+          usage: item.usage,
+          masterCategory: item.masterCategory,
+          filename: item.link.split("/").pop(),
+          quantity: 0,
+        }),
+      })
+      const data = await res.json();
+      console.log(data);
+    } catch(error){
+      toast.error("error"+ error)
+    }
+  }
+
   return (
     <>
     <div className="w-full bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300" >
         <button className='w-full p-5' onClick={()=>setIsVisible(!isVisible)}>{isVisible? "Hide Orders": "Show orders"}</button>
-    </div>
+    
       <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isVisible ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0 "} mt-4`}>
         <div className="shadow-xl h-auto   overflow-auto">
           <div className="bg-white h-auto rounded-md p-6">
             <div className="mb-2">
               <div>
                 <p className="text-3xl font-semibold">All Orders</p>
+                <p className='text-red-600 text-sm hover:underline' onClick={()=>handleHistory}>Clear History</p>
               </div>
               <div className="flex justify-end ">
                 <p>Price</p>
@@ -96,8 +139,8 @@ const OrderHistory = () => {
                       {item.subCategory}, {item.usage}, {item.year}
                     </div>
                     <div className="flex items-center gap-2 mt-1">
-                      <input type="checkbox" id="Gift" />
-                      <label htmlFor="Gift" className="text-sm">
+                      <input type="checkbox" id={`${item.filname}`} />
+                      <label htmlFor={`${item.filname}`} className="text-sm">
                         Gift
                       </label>
                     </div>
@@ -113,6 +156,7 @@ const OrderHistory = () => {
           </div>
         </div>
       </div>
+    </div>
     </>
   )
 }
