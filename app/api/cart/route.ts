@@ -91,7 +91,10 @@ export async function POST(req: Request) {
 // Showing Items of Cart
 export async function GET() {
   const { userId } = await auth();
-  const { data, error } = await supabase.from("Cart").select("*").eq("userId", userId);
+  const { data, error } = await supabase
+    .from("Cart")
+    .select("*")
+    .eq("userId", userId);
   console.log(data, error);
 
   if (error) {
