@@ -7,6 +7,7 @@ const supabase = createClient(
   process.env.SUPABASE_SERVICE_ROLE_KEY!
 );
 
+// Search Products
 export async function POST(req: Request) {
   try {
     const { userId } = await auth();
@@ -87,6 +88,7 @@ export async function POST(req: Request) {
   }
 }
 
+// Showing Items of Cart
 export async function GET() {
   const { data, error } = await supabase.from("Cart").select("*");
   console.log(data, error);
@@ -98,6 +100,7 @@ export async function GET() {
   return NextResponse.json({ Cart: data }, { status: 200 });
 }
 
+// Deleting or Decreasing quantity from Cart
 export async function PATCH(req: Request) {
   try {
     const { userId } = await auth();
@@ -107,8 +110,25 @@ export async function PATCH(req: Request) {
         { status: 401 }
       );
     }
+
     const body = await req.json();
-    const { productId } = body;
+    const { productId, quantity } = body;
+    if (quantity === 0) {
+      const { error: deleteError } = await supabase
+        .from("Cart")
+        .delete()
+        .eq("userId", userId)
+        .eq("productId", productId);
+
+      if (deleteError) {
+        console.error("Update error:", deleteError);
+        return NextResponse.json(
+          { error: deleteError.message },
+          { status: 500 }
+        );
+      }
+      return NextResponse.json({ message: "Item removed from cart" });
+    }
 
     const { data: existing, error: fetchError } = await supabase
       .from("Cart")
@@ -124,7 +144,7 @@ export async function PATCH(req: Request) {
       );
     }
 
-    if (existing.quantity > 1) {
+    if (existing.quantity >= 1) {
       const { error: updateError } = await supabase
         .from("Cart")
         .update({ quantity: existing.quantity - 1 })
@@ -139,21 +159,6 @@ export async function PATCH(req: Request) {
         );
       }
       return NextResponse.json({ message: "Quantity updated" });
-    } else {
-      const { error: deleteError } = await supabase
-        .from("Cart")
-        .delete()
-        .eq("userId", userId)
-        .eq("productId", productId);
-
-      if (deleteError) {
-        console.error("Update error:", deleteError);
-        return NextResponse.json(
-          { error: deleteError.message },
-          { status: 500 }
-        );
-      }
-      return NextResponse.json({ message: "Item removed from cart" });
     }
   } catch (error) {
     console.log(error);

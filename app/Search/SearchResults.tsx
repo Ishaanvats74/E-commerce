@@ -6,6 +6,7 @@ import "@smastrom/react-rating/style.css";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import { toast } from "sonner";
 
 type Product = {
   id: number;
@@ -53,7 +54,7 @@ const SearhResults = () => {
 
   const handleToCart = async (item: Product) => {
     if (!user) {
-      alert("Please login to add products to cart");
+      toast("Please login to add products to cart");
       return;
     }
 
@@ -85,14 +86,14 @@ const SearhResults = () => {
 
       const data = await res.json();
       if (res.ok) {
-        alert("Product added to cart!");
+        toast.success("Product added to cart!");
         console.log(data);
       } else {
-        alert("Failed to add to cart: " + data.error);
+        toast.error("Failed to add to cart: " + data.error);
       }
     } catch (error) {
       console.error("Error adding to cart:", error);
-      alert("Something went wrong.");
+      toast.error("Something went wrong.");
     }
   };
 

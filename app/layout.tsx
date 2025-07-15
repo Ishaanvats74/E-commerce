@@ -3,6 +3,8 @@ import "./globals.css";
 import Navbar from "./Components/Navbar";
 import Footer from "./Components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { Toaster } from "@/components/ui/sonner";
+
 
 
 
@@ -24,6 +26,7 @@ export default async function RootLayout({
         <body>
             <Navbar/>
             {children}
+            <Toaster/>
             <Footer/>
         </body>
       </html>
