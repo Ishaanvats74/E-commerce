@@ -1,71 +1,90 @@
-'use client';
+"use client";
 
-import React from 'react'
+import React from "react";
 
-const GetToKnow =[
-    'About Us',
-    'Careers',
-    'Press Releases',
-    'E-Commerce Science',
-]
-
-const ConnectWithUs = [
-    'Facebook',
-    'twitter',
-    'Instagram',
-]
-
+const GetToKnow = [
+  "About Us",
+  "Careers",
+  "Press Releases",
+  "E-Commerce Science",
+];
+const ConnectWithUs = ["Facebook", "Twitter", "Instagram"];
 const MakeMoneyWithUs = [
-    'Sell on E-Commerce',
-    'Sell under E-Commerce Accelerator',
-    'Protect & Build Your Brand',
-    'Advertise Your Products',
-    'Self-Publish with Us',
-    'Host an E-Commerce Hub',
-    'See More Make Money with Us'
-]
-
+  "Sell on ShopWise",
+  "Sell under Accelerator",
+  "Protect Your Brand",
+  "Advertise Your Products",
+  "Self-Publish with Us",
+  "Host a ShopWise Hub",
+  "See More Ways to Earn",
+];
 const LetUsHelpYou = [
-    'your Account',
-    'Returns Centre',
-    '100% Purchase Protection',
-    'E-Commerce App Download',
-    'Help',
-]
-
-
+  "Your Account",
+  "Returns Centre",
+  "Purchase Protection",
+  "App Download",
+  "Help",
+];
 
 const Footer = () => {
   return (
-    <div className='bg-[#1e242af0] text-[#DDDDDD]'>
-        <div onClick={()=> window.scrollTo({top:0,behavior:'smooth'})} className='w-full shadow justify-center bg-[#252c34] text-white hover:bg-gray-700/80 hover:cursor-pointer h-15 flex items-center'>Back to Top</div>
-      <div className='   space-y-20 pt-24 '>
-        <div className='flex justify-around text-white'>
-            <div className='space-y-4'>
-                <p className='font-bold'>Get to Know Us</p>
-                <ul>{GetToKnow.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-            </div>
-            <div className='space-y-4'>
-                <p className='font-bold'>Connect with Us</p>
-                <ul>{ConnectWithUs.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-            </div>
-            <div className='space-y-4'>
-                <p className='font-bold'>Make Money with Us</p>
-                <ul>{MakeMoneyWithUs.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-            </div>
-            <div className='space-y-4'>
-                <p className='font-bold'>Let Us Help You</p>
-                <ul>{LetUsHelpYou.map((item,index)=>(<li key={index}>{item}</li>))}</ul>
-            </div>
-        </div>
-        <hr />
+    <footer className="bg-[#0f172a] text-[#f1f5f9] text-sm">
+      <div
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="w-full text-center bg-[#1e293b] hover:bg-[#334155] text-white py-4 cursor-pointer transition"
+      >
+        Back to Top
       </div>
-        <div className='flex flex-col justify-center items-center text-white bg-gray-700 py-10'>
-            <p>E-Commerce</p>
-            <p>© 2023 E-Commerce, Inc. or its affiliates</p>
-        </div>  
-    </div>
-  )
-}
 
-export default Footer
+      <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-2 md:grid-cols-4 gap-10 border-b border-gray-700">
+        <div>
+          <h4 className="font-semibold text-white mb-4">Get to Know Us</h4>
+          <ul className="space-y-2">
+            {GetToKnow.map((item, i) => (
+              <li key={i} className="hover:underline cursor-pointer">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-white mb-4">Connect with Us</h4>
+          <ul className="space-y-2">
+            {ConnectWithUs.map((item, i) => (
+              <li key={i} className="hover:underline cursor-pointer">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-white mb-4">Make Money with Us</h4>
+          <ul className="space-y-2">
+            {MakeMoneyWithUs.map((item, i) => (
+              <li key={i} className="hover:underline cursor-pointer">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 className="font-semibold text-white mb-4">Let Us Help You</h4>
+          <ul className="space-y-2">
+            {LetUsHelpYou.map((item, i) => (
+              <li key={i} className="hover:underline cursor-pointer">
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+
+      <div className="bg-[#1e293b] py-6 flex flex-col items-center text-gray-400 text-sm">
+        <p className="text-[#f59e0b] font-bold text-lg">ShopWise</p>
+        <p>© {new Date().getFullYear()} ShopWise, Inc. All rights reserved.</p>
+      </div>
+    </footer>
+  );
+};
+
+export default Footer;

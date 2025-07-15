@@ -9,8 +9,8 @@ const supabase = createClient(
 
 // Search Products
 export async function POST(req: Request) {
+  const { userId } = await auth();
   try {
-    const { userId } = await auth();
     console.log("Clerk userId:", userId);
 
     if (!userId) {
@@ -90,7 +90,8 @@ export async function POST(req: Request) {
 
 // Showing Items of Cart
 export async function GET() {
-  const { data, error } = await supabase.from("Cart").select("*");
+  const { userId } = await auth();
+  const { data, error } = await supabase.from("Cart").select("*").eq("userId", userId);
   console.log(data, error);
 
   if (error) {

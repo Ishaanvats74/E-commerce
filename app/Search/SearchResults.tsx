@@ -59,7 +59,7 @@ const SearhResults = () => {
     }
 
     try {
-      const res = await fetch("/api/cart", {
+      const res = await fetch(`/api/cart?userId=${user.id}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -97,8 +97,8 @@ const SearhResults = () => {
     }
   };
 
-  const handleBuy = async(item:Product) => {
-     if (!user) {
+  const handleBuy = async (item: Product) => {
+    if (!user) {
       toast("Please login to add products to cart");
       return;
     }
@@ -108,7 +108,7 @@ const SearhResults = () => {
     // }
 
     try {
-        const payload = {
+      const payload = {
         clerkUserId: user.id,
         productId: item.id,
         price: item.price,
@@ -127,18 +127,17 @@ const SearhResults = () => {
         address: "Some default or fetched address here", // Fix this later
       };
 
-      const res = await fetch('/api/orders',{
-        method:"POST",
+      const res = await fetch("/api/orders", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        body: JSON.stringify(payload)
-      } 
-    );
-    const data = await res.json();
-    console.log(data)
-    if (res.ok) {
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      console.log(data);
+      if (res.ok) {
         toast.success("Product Purchased");
         console.log(data);
       } else {
@@ -148,7 +147,6 @@ const SearhResults = () => {
       console.error("Error on Purchase:", error);
       toast.error("Something went wrong.");
     }
-
   };
 
   return (
@@ -239,7 +237,7 @@ const SearhResults = () => {
                       <div>
                         <button
                           className=" p-2 rounded-3xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold"
-                          onClick={()=> handleBuy(item)}
+                          onClick={() => handleBuy(item)}
                         >
                           Buy Now
                         </button>
@@ -252,58 +250,52 @@ const SearhResults = () => {
           </div>
           <div className="flex justify-center my-5 mt-20">
             {products.length > 0 && (
-              <div className="flex items-center gap-5 p-3 shadow-lg rounded-lg text-lg">
-                <div>
-                  <button
-                    disabled={currentPage == 1}
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                    className={` p-1 shadow-lg rounded-lg w-20 ${
-                      currentPage == 1
-                        ? "text-gray-500"
-                        : "text-black hover:bg-gray-300 transition-all duration-200 ease-in-out  "
-                    }`}
-                  >
-                    Previous
-                  </button>
-                </div>
-                <div className="gap-5 flex">
-                  <button
-                    disabled={currentPage == 1}
-                    onClick={() => setCurrentPage(currentPage - 1)}
-                  >
-                    {currentPage == 1 ? (
-                      <div></div>
-                    ) : (
-                      <div className="p-2 text-black">{currentPage - 1}</div>
-                    )}
-                  </button>
-                  <button className="border p-2 border-gray-300 text-gray-300">
+              <div className="flex items-center justify-center gap-6 px-6 py-4 mt-10 bg-white text-gray-800 rounded-lg shadow-md">
+                <button
+                  onClick={() => setCurrentPage(currentPage - 1)}
+                  disabled={currentPage === 1}
+                  className={`px-4 py-2 rounded-md font-medium border transition-all ${
+                    currentPage === 1
+                      ? "text-gray-400 border-gray-300 cursor-not-allowed bg-gray-100"
+                      : "text-gray-700 border-gray-300 hover:bg-gray-100"
+                  }`}
+                >
+                  Previous
+                </button>
+                <div className="flex items-center gap-4 text-lg font-semibold">
+                  {currentPage > 1 && (
+                    <button
+                      onClick={() => setCurrentPage(currentPage - 1)}
+                      className="text-gray-600 hover:text-blue-600 transition"
+                    >
+                      {currentPage - 1}
+                    </button>
+                  )}
+
+                  <span className="text-blue-600 border border-blue-500 px-3 py-1 rounded">
                     {currentPage}
-                  </button>
-                  <button
-                    disabled={totalPages == currentPage}
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                  >
-                    {totalPages == currentPage ? (
-                      <div></div>
-                    ) : (
-                      <div className="p-2 text-black">{currentPage + 1}</div>
-                    )}
-                  </button>
+                  </span>
+
+                  {currentPage < totalPages && (
+                    <button
+                      onClick={() => setCurrentPage(currentPage + 1)}
+                      className="text-gray-600 hover:text-blue-600 transition"
+                    >
+                      {currentPage + 1}
+                    </button>
+                  )}
                 </div>
-                <div>
-                  <button
-                    disabled={totalPages == currentPage}
-                    onClick={() => setCurrentPage(currentPage + 1)}
-                    className={`w-20 p-1 shadow-lg rounded-lg ${
-                      totalPages == currentPage
-                        ? "text-gray-500"
-                        : "text-black hover:bg-gray-300 transition-all duration-200 ease-in-out"
-                    }`}
-                  >
-                    Next
-                  </button>
-                </div>
+                <button
+                  onClick={() => setCurrentPage(currentPage + 1)}
+                  disabled={currentPage === totalPages}
+                  className={`px-4 py-2 rounded-md font-medium border transition-all ${
+                    currentPage === totalPages
+                      ? "text-gray-400 border-gray-300 cursor-not-allowed bg-gray-100"
+                      : "text-gray-700 border-gray-300 hover:bg-gray-100"
+                  }`}
+                >
+                  Next
+                </button>
               </div>
             )}
           </div>

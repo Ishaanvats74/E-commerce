@@ -51,7 +51,11 @@ export async function POST(req: Request) {
 
 
 export async function GET() {
-    const {data , error} = await supabase.from('Orders').select("*")
+    const {userId} = await auth();
+    if (!userId) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    const {data , error} = await supabase.from('Orders').select("*").eq("userId",userId)
     console.log(data,error)
 
     if(error){
