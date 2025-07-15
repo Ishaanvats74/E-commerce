@@ -4,8 +4,8 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { toast } from "sonner";
 type Cart = {
-  productId: number;
-  id: number;
+  productId: number,
+  id: number,
   gender: string;
   masterCategory: string;
   subCategory: string;

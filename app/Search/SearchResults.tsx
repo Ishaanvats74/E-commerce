@@ -97,8 +97,55 @@ const SearhResults = () => {
     }
   };
 
-  const handleBuy = () => {
-    console.log("Product purchased");
+  const handleBuy = async(item:Product) => {
+     if (!user) {
+      toast("Please login to add products to cart");
+      return;
+    }
+    // if (!address) {
+    //   toast("Please Provide your address");
+    //   return;
+    // }
+
+    try {
+      const res = await fetch('/api/orders',{
+        method:"Post",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          lerkUserId: user.id,
+          productId: item.id,
+          price: item.price,
+          link: item.link,
+          year: item.year,
+          gender: item.gender,
+          articleType: item.articleType,
+          baseColour: item.baseColour,
+          subCategory: item.subCategory,
+          season: item.season,
+          productDisplayName: item.productDisplayName,
+          usage: item.usage,
+          masterCategory: item.masterCategory,
+          filename: item.link.split("/").pop(),
+          quantity: 1,
+        })
+      } 
+    );
+    const data = await res.json();
+    console.log(data)
+    if (res.ok) {
+        toast.success("Product Purchased");
+        console.log(data);
+      } else {
+        toast.error("Failed to Purchased: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error on Purchase:", error);
+      toast.error("Something went wrong.");
+    }
+
   };
 
   return (
@@ -189,7 +236,7 @@ const SearhResults = () => {
                       <div>
                         <button
                           className=" p-2 rounded-4xl mt-2 ml-2 transition-all duration-150 ease-in-out hover:bg-amber-500 bg-amber-400 text-sm font-semibold"
-                          onClick={handleBuy}
+                          onClick={()=>handleBuy(item)}
                         >
                           Buy Now
                         </button>

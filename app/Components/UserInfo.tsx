@@ -12,7 +12,7 @@ const UserInfo = () => {
     <button className='w-full p-5' onClick={()=> setIsVisible(!isVisible)}>
         {isVisible ? "Hide Profile" : "Show Profile"}
     </button>
-        <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isVisible ? "max-h-[1000px] opactiy-100" : "max-h-0 opacity-0 "} mt-4`}>
+        <div className={`transition-all duration-700 ease-in-out overflow-hidden ${isVisible ? "max-h-[1000px] opacity-100" : "max-h-0 opacity-0 "} mt-4`}>
             <UserProfile/>
         </div>
     </div>
